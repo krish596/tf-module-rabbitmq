@@ -33,7 +33,7 @@ resource "aws_security_group" "main" {
   }
 }
 
-resource "aws_instance" "rabbitmq" {
+resource "aws_instance" "main" {
   ami           = data.aws_ami.ami.id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
@@ -42,3 +42,10 @@ resource "aws_instance" "rabbitmq" {
   user_data = file("${path.module}/userdata.sh")
 }
 
+resource "aws_route53_record" "main" {
+  zone_id = var.zone_id
+  name    = "${var.env}-rabbitmq"
+  type    = "A"
+  ttl     = 30
+  records = [aws_instance.main.private_ip]
+}
