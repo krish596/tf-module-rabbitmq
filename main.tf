@@ -12,7 +12,7 @@ resource "aws_security_group" "main" {
     to_port          = 22
     protocol         = "tcp"
     cidr_blocks      = var.ssh_ingress_cidr
-    ipv6_cidr_blocks = ["::/0"]
+
   }
 
   ingress {
@@ -21,7 +21,7 @@ resource "aws_security_group" "main" {
     to_port          = 5672
     protocol         = "tcp"
     cidr_blocks      = var.sg_ingress_cidr
-    ipv6_cidr_blocks = ["::/0"]
+
   }
 
   egress {
